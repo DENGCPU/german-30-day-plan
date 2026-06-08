@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>德语30天学习计划</title>
+<style>
+:root {
+  --bg: #fafafa;
+  --card: #ffffff;
+  --accent: #2563eb;
+  --accent-light: #dbeafe;
+  --text: #1f2937;
+  --text-light: #6b7280;
+  --border: #e5e7eb;
+  --success: #10b981;
+  --success-light: #d1fae5;
+  --warn: #f59e0b;
+  --warn-light: #fef3c7;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111827;
+    --card: #1f2937;
+    --accent: #60a5fa;
+    --accent-light: #1e3a5f;
+    --text: #f3f4f6;
+    --text-light: #9ca3af;
+    --border: #374151;
+    --success: #34d399;
+    --success-light: #064e3b;
+    --warn: #fbbf24;
+    --warn-light: #78350f;
+  }
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding: 0 0 80px 0;
+  -webkit-text-size-adjust: 100%;
+}
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--accent);
+  color: #fff;
+  padding: 16px 20px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.header h1 { font-size: 1.2rem; font-weight: 600; }
+.header p { font-size: 0.8rem; opacity: 0.85; margin-top: 4px; }
+.nav {
+  position: sticky;
+  top: 60px;
+  z-index: 99;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 8px 12px;
+  gap: 6px;
+}
+.nav::-webkit-scrollbar { display: none; }
+.nav a {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.nav a.active, .nav a:active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.container { max-width: 640px; margin: 0 auto; padding: 16px; }
+.prep-section {
+  background: var(--warn-light);
+  border: 1px solid var(--warn);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+.prep-section h2 { font-size: 1rem; margin-bottom: 12px; color: var(--warn); }
+.prep-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+}
+.prep-item .icon { flex-shrink: 0; width: 20px; text-align: center; }
+.prep-item a { color: var(--accent); text-decoration: underline; }
+.week-header {
+  background: var(--accent-light);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin: 24px 0 12px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.day-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.day-card:active { box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+.day-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.day-header h3 { font-size: 0.95rem; font-weight: 600; }
+.day-header .subtitle { font-size: 0.75rem; color: var(--text-light); }
+.day-header .toggle {
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--bg);
+  font-size: 0.7rem;
+  transition: transform 0.3s;
+}
+.day-card.open .toggle { transform: rotate(180deg); }
+.day-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.day-card.open .day-content { max-height: 2000px; }
+.day-inner { padding: 0 16px 16px; }
+.task-block {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+.task-time {
+  display: inline-block;
+  background: var(--accent-light);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+}
+.task-title { font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; }
+.task-material { font-size: 0.75rem; color: var(--text-light); }
+.task-material::before { content: "📖 "; }
+.day-focus {
+  background: var(--success-light);
+  border-left: 3px solid var(--success);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 12px;
+  margin-top: 8px;
+  font-size: 0.8rem;
+}
+.day-focus strong { color: var(--success); }
+.milestone {
+  background: var(--card);
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 24px 0;
+}
+.milestone h3 { color: var(--accent); font-size: 0.9rem; margin-bottom: 8px; }
+.milestone li { font-size: 0.8rem; margin-bottom: 4px; padding-left: 4px; }
+.bottom-tip {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 24px;
+  font-size: 0.8rem;
+}
+.bottom-tip h3 { font-size: 0.9rem; margin-bottom: 8px; }
+.progress-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0; right: 0;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 100;
+}
+.progress-bar .bar {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-bar .bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+  transition: width 0.3s;
+}
+.progress-bar .label { font-size: 0.75rem; color: var(--text-light); white-space: nowrap; }
+.check-btn {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.check-btn.checked {
+  background: var(--success);
+  border-color: var(--success);
+}
+.check-btn.checked::after { content: "✓"; color: #fff; font-size: 0.65rem; font-weight: 700; }
+.day-header-left { display: flex; align-items: center; gap: 10px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Deutsch in 30 Tagen</h1>
+  <p>德语30天学习计划 · A1 入门</p>
+</div>
+
+<div class="nav" id="weekNav">
+  <a href="#prep" class="active">准备</a>
+  <a href="#week1">W1 语音</a>
+  <a href="#week2">W2 语法</a>
+  <a href="#week3">W3 场景</a>
+  <a href="#week4">W4 输出</a>
+</div>
+
+<div class="container">
+
+<!-- 准备阶段 -->
+<section id="prep">
+<div class="prep-section">
+  <h2>Day 0 · 准备素材</h2>
+  <div class="prep-item"><span class="icon">🌐</span><span><strong>DW Nico's Weg A1</strong><br><a href="https://learngerman.dw.com/course/nicos-weg" target="_blank">learngerman.dw.com</a> 免费注册</span></div>
+  <div class="prep-item"><span class="icon">🃏</span><span><strong>Anki + A1 词频牌组</strong><br><a href="https://ankiweb.net" target="_blank">ankiweb.net</a> 搜 "German A1 Top 500"</span></div>
+  <div class="prep-item"><span class="icon">🎧</span><span><strong>Coffee Break German</strong><br>播客 App 搜索 或 <a href="https://coffeebreaklanguages.com" target="_blank">coffeebreaklanguages.com</a></span></div>
+  <div class="prep-item"><span class="icon">📺</span><span><strong>Easy German YouTube</strong><br><a href="https://youtube.com/@EasyGerman" target="_blank">youtube.com/@EasyGerman</a></span></div>
+  <div class="prep-item"><span class="icon">🦉</span><span><strong>Duolingo</strong><br>App Store 下载</span></div>
+  <div class="prep-item"><span class="icon">📗</span><span><strong>Menschen A1 教材</strong><br>Hueber 出版社，购买纸质或电子版</span></div>
+  <div class="prep-item"><span class="icon">📖</span><span><strong>dict.cc</strong><br><a href="https://dict.cc" target="_blank">dict.cc</a> 或下载 App</span></div>
+</div>
+</section>
+
+<!-- 第一周 -->
+<section id="week1">
+<div class="week-header">第 1 周 · 语音与生存短语</div>
+
+<div class="day-card" id="day1">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="1"></button>
+      <div><h3>Day 1</h3><span class="subtitle">字母与发音规则</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">学 26 个字母 + ä ö ü ß 发音</div>
+      <div class="task-material">YouTube: Learn German with Anja "German Alphabet"</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">跟读字母表 3 遍，录音对比</div>
+      <div class="task-material">同上视频</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki：学习前 15 个词</div>
+      <div class="task-material">Anki — Hallo, Tschüss, ja, nein, danke, bitte, gut, schlecht, ich, du, er, sie, es, wir, und</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 1 课 "Hallo!"</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 1</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">大声朗读今天的 15 个词，每个 3 遍</div>
+      <div class="task-material">Anki 牌组</div>
+    </div>
+    <div class="day-focus"><strong>重点：</strong>元音 a/e/i/o/u，ä=[ɛ], ö=[ø], ü=[y]</div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day2">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="2"></button>
+      <div><h3>Day 2</h3><span class="subtitle">辅音组合发音</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">辅音组合：ch, sch, sp/st, z, ei, ie, eu/äu</div>
+      <div class="task-material">YouTube: Lingoni German "German Pronunciation Rules"</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">跟读练习词：ich, acht, Schule, Straße, zehn, mein, die, deutsch</div>
+      <div class="task-material">同上视频</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — Morgen, Abend, Tag, Nacht, Frau, Herr, Name, kommen, heißen, sein, sprechen, Deutsch, Englisch, Chinesisch, aus</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 2 课 "Wer bist du?"</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 2</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">造句朗读：Ich heiße… Ich komme aus China.</div>
+      <div class="task-material">自主练习</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day3">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="3"></button>
+      <div><h3>Day 3</h3><span class="subtitle">数字 0-20 + 自我介绍</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 15min</span>
+      <div class="task-title">学数字 0-20</div>
+      <div class="task-material">DW Nico's Weg 第 3 课</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 15min</span>
+      <div class="task-title">跟读数字，注意 drei/dreizehn、sechs/sechzehn 区别</div>
+      <div class="task-material">YouTube: Easy German "Numbers 1-20"</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — eins 到 zehn + Telefonnummer, Adresse, wohnen, leben, arbeiten</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW 第 3 课练习题</div>
+      <div class="task-material">DW Nico's Weg</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">写出完整自我介绍（5 句）并朗读</div>
+      <div class="task-material">笔记本 — 模板：Hallo! Ich heiße… Ich komme aus… Ich wohne in… Meine Telefonnummer ist…</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day4">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="4"></button>
+      <div><h3>Day 4</h3><span class="subtitle">数字 20-100 + sein 变位</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 15min</span>
+      <div class="task-title">数字 20-100 规则（einundzwanzig, zweiunddreißig…）</div>
+      <div class="task-material">YouTube: Easy German "Numbers to 100"</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 15min</span>
+      <div class="task-title">sein 变位表：ich bin, du bist, er ist, wir sind, ihr seid, sie sind</div>
+      <div class="task-material">Menschen A1 Lektion 1 语法部分</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — zwanzig, dreißig…hundert + Beruf, Student, Lehrer, Arzt, alt, jung</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 4 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 4</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">口头造 5 个 sein 句子</div>
+      <div class="task-material">自主练习 — Ich bin Student. Er ist Lehrer. Wir sind aus China.</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day5">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="5"></button>
+      <div><h3>Day 5</h3><span class="subtitle">haben 动词 + 名词性别</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 15min</span>
+      <div class="task-title">haben 变位：ich habe, du hast, er hat, wir haben…</div>
+      <div class="task-material">Menschen A1 Lektion 2 语法部分</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 15min</span>
+      <div class="task-title">名词性别初步：der(阳), die(阴), das(中)</div>
+      <div class="task-material">DW 语法讲解</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — der Tisch, der Stuhl, die Lampe, das Buch, das Handy, die Tasche, der Schlüssel, die Brille, haben, mein, dein, kein, was, wo, hier</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 5 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 5</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">造句：Ich habe ein Buch. Hast du ein Handy?</div>
+      <div class="task-material">自主练习</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day6">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="6"></button>
+      <div><h3>Day 6</h3><span class="subtitle">规则动词变位 + W-Fragen</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">规则动词变位：词干 + e/st/t/en/t/en</div>
+      <div class="task-material">Menschen A1 Lektion 2 — lernen, machen, spielen, trinken</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">W-Fragen：Wer? Was? Wo? Wie? Woher? Wohin?</div>
+      <div class="task-material">DW 语法专题</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — lernen, machen, spielen, trinken, essen, lesen, schreiben, hören, sehen, gehen, wer, wie, woher, wohin, warum</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 6 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 6</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">写 5 个 W-Fragen 并回答</div>
+      <div class="task-material">笔记本 — Wo wohnst du? Ich wohne in Beijing.</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day7">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="7"></button>
+      <div><h3>Day 7</h3><span class="subtitle">第一周复习</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">Anki 全部复习（~105 词）</div>
+      <div class="task-material">Anki</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">重看 Day1-2 发音视频，查漏补缺</div>
+      <div class="task-material">YouTube 发音视频</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 20min</span>
+      <div class="task-title">回看 DW 第 1-6 课错题</div>
+      <div class="task-material">DW Nico's Weg</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">听 Coffee Break German S1E01（纯听）</div>
+      <div class="task-material">Coffee Break German 播客 S1E01</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 5min</span>
+      <div class="task-title">用德语写 5 句话总结本周</div>
+      <div class="task-material">笔记本</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="milestone">
+  <h3>Week 1 里程碑</h3>
+  <ul>
+    <li>能正确发出所有德语特殊音</li>
+    <li>自我介绍流畅（5 句）</li>
+    <li>sein/haben 变位脱口而出</li>
+    <li>掌握约 105 个核心词汇</li>
+  </ul>
+</div>
+</section>
+
+<!-- 第二周 -->
+<section id="week2">
+<div class="week-header">第 2 周 · 核心语法 + 日常场景</div>
+
+<div class="day-card" id="day8">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="8"></button>
+      <div><h3>Day 8</h3><span class="subtitle">冠词系统（Nominativ）</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">定冠词 der/die/das + 不定冠词 ein/eine + 否定 kein/keine</div>
+      <div class="task-material">Menschen A1 Lektion 3</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">名词性别记忆技巧：阳(-er,-ling), 阴(-ung,-heit,-keit,-tion), 中(-chen,-lein,Ge-)</div>
+      <div class="task-material">DW 语法专题</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — Familie, Vater, Mutter, Bruder, Schwester, Kind, Sohn, Tochter, Eltern, Geschwister, groß, klein, schön, neu, alt</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 7 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 7</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">造句：Das ist ein Buch. Die Lampe ist neu.</div>
+      <div class="task-material">笔记本</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day9">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="9"></button>
+      <div><h3>Day 9</h3><span class="subtitle">物主代词</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">物主代词 mein/dein/sein/ihr/unser（Nominativ）</div>
+      <div class="task-material">Menschen A1 Lektion 3</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">跟读课文对话</div>
+      <div class="task-material">Menschen A1 音频</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — mein, dein, sein, ihr, unser, euer, Ihr, verheiratet, ledig, geschieden, Freundin, Freund, zusammen, allein, mit</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 8 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 8</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">用德语描述家庭（5 句）</div>
+      <div class="task-material">笔记本 — Meine Mutter heißt… Mein Vater ist…</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day10">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="10"></button>
+      <div><h3>Day 10</h3><span class="subtitle">时间表达 + 星期</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">Wie spät ist es? halb, Viertel vor/nach</div>
+      <div class="task-material">DW Nico's Weg 第 9 课</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">星期 Montag-Sonntag + am Montag</div>
+      <div class="task-material">Menschen A1 Lektion 4</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — Montag-Sonntag + Uhr, halb, Viertel, morgens, abends, mittags</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW 第 9 课习题</div>
+      <div class="task-material">DW Nico's Weg</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">描述你的一天：Am Morgen stehe ich auf…</div>
+      <div class="task-material">笔记本</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day11">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="11"></button>
+      <div><h3>Day 11</h3><span class="subtitle">可分动词</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">可分动词规则：aufstehen → Ich stehe um 7 Uhr auf.</div>
+      <div class="task-material">Menschen A1 Lektion 4</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">常见可分动词列表背诵</div>
+      <div class="task-material">DW 语法</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — aufstehen, anfangen, aufhören, einkaufen, fernsehen, mitkommen, zurückkommen, anrufen, früh, spät, dann, danach, zuerst, immer, manchmal</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 10 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 10</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">写日程：Zuerst stehe ich auf. Dann frühstücke ich.</div>
+      <div class="task-material">笔记本</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day12">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="12"></button>
+      <div><h3>Day 12</h3><span class="subtitle">Akkusativ（第四格）</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 25min</span>
+      <div class="task-title">Akkusativ：阳性 der→den, ein→einen, kein→keinen</div>
+      <div class="task-material">Menschen A1 Lektion 5</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">练习判断主语(Nom) vs 宾语(Akk)</div>
+      <div class="task-material">Menschen 练习册</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — kaufen, brauchen, suchen, finden, nehmen, möchten, den, einen, keinen, Supermarkt, Bäckerei, Apfel, Brot, Milch, Wasser</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 11 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 11</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 5min</span>
+      <div class="task-title">造句：Ich kaufe einen Apfel. Wir nehmen den Bus.</div>
+      <div class="task-material">笔记本</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day13">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="13"></button>
+      <div><h3>Day 13</h3><span class="subtitle">食物与购物</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 15min</span>
+      <div class="task-title">食物词汇 + 超市/面包店对话</div>
+      <div class="task-material">Menschen A1 Lektion 5</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 15min</span>
+      <div class="task-title">练习对话：Was möchten Sie? Ich möchte…</div>
+      <div class="task-material">DW 课程</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — Fleisch, Käse, Butter, Kuchen, Gemüse, Obst, teuer, billig, kosten, bezahlen, Euro, Kilo, Flasche, Stück, gern</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 12 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 12</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">看 Easy German "At the supermarket"</div>
+      <div class="task-material">YouTube: Easy German</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day14">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="14"></button>
+      <div><h3>Day 14</h3><span class="subtitle">第二周复习</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">Anki 全面复习（~210 词）</div>
+      <div class="task-material">Anki</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">回顾语法笔记：冠词表、Akkusativ、可分动词</div>
+      <div class="task-material">笔记本</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 20min</span>
+      <div class="task-title">Coffee Break German S1E02-E03</div>
+      <div class="task-material">Coffee Break German 播客</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW 第 7-12 课错题回看</div>
+      <div class="task-material">DW Nico's Weg</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 5min</span>
+      <div class="task-title">用德语描述昨天做了什么（5 句）</div>
+      <div class="task-material">笔记本</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="milestone">
+  <h3>Week 2 里程碑</h3>
+  <ul>
+    <li>冠词系统 Nominativ + Akkusativ 基本掌握</li>
+    <li>能进行购物场景对话</li>
+    <li>可分动词运用自如</li>
+    <li>掌握约 210 个核心词汇</li>
+  </ul>
+</div>
+</section>
+
+<!-- 第三周 -->
+<section id="week3">
+<div class="week-header">第 3 周 · 场景扩展 + 听说强化</div>
+
+<div class="day-card" id="day15">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="15"></button>
+      <div><h3>Day 15</h3><span class="subtitle">情态动词 können/müssen</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">können/müssen 变位 + 框型结构（情态V2 + 原形句末）</div>
+      <div class="task-material">Menschen A1 Lektion 6</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">跟读例句</div>
+      <div class="task-material">Menschen 音频</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — können, müssen, dürfen, sollen, wollen, mögen, schwimmen, fahren, kochen, tanzen, singen, helfen, leider, natürlich, vielleicht</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 13 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 13</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">造句：Ich kann Deutsch sprechen. Können Sie mir helfen?</div>
+      <div class="task-material">笔记本</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day16">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="16"></button>
+      <div><h3>Day 16</h3><span class="subtitle">möchten/wollen + 餐厅</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 15min</span>
+      <div class="task-title">möchten/wollen 区别和用法</div>
+      <div class="task-material">Menschen A1 Lektion 6</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 15min</span>
+      <div class="task-title">餐厅对话：bestellen, Speisekarte, Ich möchte bitte…</div>
+      <div class="task-material">DW 课程</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — bestellen, Speisekarte, Gericht, Vorspeise, Nachspeise, Getränk, Kaffee, Tee, Bier, Wein, Rechnung, zahlen, zusammen, getrennt, lecker</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 14 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 14</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">看 Easy German "Ordering Food"</div>
+      <div class="task-material">YouTube: Easy German</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day17">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="17"></button>
+      <div><h3>Day 17</h3><span class="subtitle">方位介词 + 问路</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">方位词：links, rechts, geradeaus + 问路句型</div>
+      <div class="task-material">Menschen A1 Lektion 7</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">介词 in, an, auf, neben, zwischen（初步了解）</div>
+      <div class="task-material">DW 语法</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — links, rechts, geradeaus, gegenüber, neben, zwischen, Straße, Kreuzung, Ampel, Haltestelle, Bahnhof, Apotheke, Post, Krankenhaus, Entschuldigung</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 15 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 15</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">模拟问路对话朗读</div>
+      <div class="task-material">自主练习 — Entschuldigung, wo ist der Bahnhof?</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day18">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="18"></button>
+      <div><h3>Day 18</h3><span class="subtitle">交通 + mit Dativ</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">交通工具 + mit dem Bus, mit der U-Bahn</div>
+      <div class="task-material">Menschen A1 Lektion 7</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">跟读对话</div>
+      <div class="task-material">Menschen 音频</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — Bus, U-Bahn, Straßenbahn, Taxi, Fahrrad, zu Fuß, fahren, Fahrkarte, umsteigen, aussteigen, einsteigen, Linie, Haltestelle, dauern, etwa</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 16 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 16</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">Coffee Break German S1E04</div>
+      <div class="task-material">Coffee Break German 播客</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day19">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="19"></button>
+      <div><h3>Day 19</h3><span class="subtitle">Dativ（第三格）</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 25min</span>
+      <div class="task-title">Dativ 规则：der→dem, die→der, das→dem, die(复)→den(+n)</div>
+      <div class="task-material">Menschen A1 Lektion 8</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">Dativ 介词：mit, von, zu, nach, aus, bei, seit</div>
+      <div class="task-material">Menschen 语法</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — dem, der, den, mit, von, zu, nach, aus, bei, seit, geben, schenken, zeigen, gehören, gefallen</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 17 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 17</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 5min</span>
+      <div class="task-title">造句：Ich fahre mit dem Bus. Das gehört dem Lehrer.</div>
+      <div class="task-material">笔记本</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day20">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="20"></button>
+      <div><h3>Day 20</h3><span class="subtitle">人称代词（Akk+Dat）</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">人称代词三/四格表：mich/mir, dich/dir, ihn/ihm…</div>
+      <div class="task-material">Menschen A1 Lektion 8</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">做填空练习</div>
+      <div class="task-material">Menschen 练习册</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — mich, mir, dich, dir, ihn, ihm, sie, ihr, uns, ihnen, antworten, danken, helfen, schreiben, schicken</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 18 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 18</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">看 Easy German "Dativ explained"</div>
+      <div class="task-material">YouTube: Easy German</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day21">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="21"></button>
+      <div><h3>Day 21</h3><span class="subtitle">第三周复习</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">Anki 全面复习（~315 词）</div>
+      <div class="task-material">Anki</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">默写三格表（冠词 + 人称代词）</div>
+      <div class="task-material">笔记本</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 20min</span>
+      <div class="task-title">Slow German 选一期 A1 难度（听 2 遍 + 看文本）</div>
+      <div class="task-material">Slow German mit Annik Rubens + slowgerman.com</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW 第 13-18 课重难点回看</div>
+      <div class="task-material">DW Nico's Weg</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 5min</span>
+      <div class="task-title">自我评估：记下薄弱语法点</div>
+      <div class="task-material">笔记本</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="milestone">
+  <h3>Week 3 里程碑</h3>
+  <ul>
+    <li>能用情态动词表达能力/义务/意愿</li>
+    <li>餐厅点餐、问路对话流畅</li>
+    <li>Dativ 基本理解，能用介词短语</li>
+    <li>掌握约 315 个核心词汇</li>
+  </ul>
+</div>
+</section>
+
+<!-- 第四周 -->
+<section id="week4">
+<div class="week-header">第 4 周 · 输出强化 + 综合运用</div>
+
+<div class="day-card" id="day22">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="22"></button>
+      <div><h3>Day 22</h3><span class="subtitle">Perfekt 初步</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 25min</span>
+      <div class="task-title">Perfekt 结构：haben/sein + ge-…-t / ge-…-en</div>
+      <div class="task-material">Menschen A1 Lektion 9</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">规则动词 P.II：machen→gemacht, lernen→gelernt</div>
+      <div class="task-material">Menschen A1</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — gemacht, gelernt, gekauft, gespielt, gearbeitet, gewohnt, gehört, gesagt, gefragt, geantwortet, gestern, letzte Woche, letztes Jahr, schon, noch nicht</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 19 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 19</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 5min</span>
+      <div class="task-title">用 Perfekt 写 3 句过去经历</div>
+      <div class="task-material">笔记本 — Gestern habe ich Deutsch gelernt.</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day23">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="23"></button>
+      <div><h3>Day 23</h3><span class="subtitle">Perfekt 不规则 + sein 助动词</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">不规则 P.II：gehen→gegangen, fahren→gefahren…</div>
+      <div class="task-material">Menschen A1 Lektion 9</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">sein 做助动词：移动/状态变化动词</div>
+      <div class="task-material">DW 语法</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — gegangen, gefahren, gekommen, geflogen, geblieben, gewesen, geschrieben, gelesen, getrunken, gegessen, genommen, gesehen, geschlafen, aufgestanden, angefangen</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 20 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 20</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">用德语写"昨天的一天"（7 句+，用 Perfekt）</div>
+      <div class="task-material">笔记本</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day24">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="24"></button>
+      <div><h3>Day 24</h3><span class="subtitle">形容词 + 描述</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">形容词作表语（不变化）：Das Haus ist groß.</div>
+      <div class="task-material">Menschen A1 Lektion 10</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">常用形容词反义词配对</div>
+      <div class="task-material">Menschen 词汇表</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — freundlich, lustig, langweilig, interessant, wichtig, einfach, schwer, schnell, langsam, warm, kalt, heiß, müde, hungrig, durstig</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 21 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 21</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">描述朋友/家人各 3 个形容词</div>
+      <div class="task-material">笔记本</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day25">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="25"></button>
+      <div><h3>Day 25</h3><span class="subtitle">日期 + 预约</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 15min</span>
+      <div class="task-title">月份 Januar-Dezember + 日期序数词</div>
+      <div class="task-material">Menschen A1 Lektion 10</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 15min</span>
+      <div class="task-title">预约场景：Termin machen, Wann haben Sie Zeit?</div>
+      <div class="task-material">DW 课程</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — Januar-Dezember + Termin, passen, vereinbaren</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW Nico's Weg 第 22 课</div>
+      <div class="task-material">DW Nico's Weg A1 Kapitel 22</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">写一段预约对话（4-6 句往返）</div>
+      <div class="task-material">笔记本</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day26">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="26"></button>
+      <div><h3>Day 26</h3><span class="subtitle">天气 + 爱好</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 15min</span>
+      <div class="task-title">天气：Wie ist das Wetter? Es regnet. Die Sonne scheint.</div>
+      <div class="task-material">DW Nico's Weg 第 23 课</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 15min</span>
+      <div class="task-title">爱好表达：gern/lieber/am liebsten</div>
+      <div class="task-material">Menschen A1</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习 + 新增 15 词</div>
+      <div class="task-material">Anki — Wetter, regnen, schneien, Sonne, Wind, bewölkt, Hobby, gern, lieber, am liebsten, Fußball, wandern, Musik hören, Rad fahren, fotografieren</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">DW 第 23 课练习</div>
+      <div class="task-material">DW Nico's Weg</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 10min</span>
+      <div class="task-title">Easy German "Hobbies" 视频</div>
+      <div class="task-material">YouTube: Easy German</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day27">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="27"></button>
+      <div><h3>Day 27</h3><span class="subtitle">综合对话练习</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">复习所有情景对话（自我介绍/购物/问路/餐厅/预约）</div>
+      <div class="task-material">笔记本回顾</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">大声朗读每个对话 2 遍</div>
+      <div class="task-material">自主练习</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习（不加新词，纯巩固）</div>
+      <div class="task-material">Anki</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 20min</span>
+      <div class="task-title">Easy German 2 个短视频：关字幕→开字幕</div>
+      <div class="task-material">YouTube: Easy German</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 5min</span>
+      <div class="task-title">记下没听懂的 5 个词，查词典</div>
+      <div class="task-material">dict.cc</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day28">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="28"></button>
+      <div><h3>Day 28</h3><span class="subtitle">写作日 + 语法总复习</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 25min</span>
+      <div class="task-title">默写语法总结表：动词变位、冠词三格表、人称代词</div>
+      <div class="task-material">笔记本</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">对照 Menschen 附录检查</div>
+      <div class="task-material">Menschen A1 附录</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习</div>
+      <div class="task-material">Anki</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 20min</span>
+      <div class="task-title">写一封德语邮件给虚拟笔友（10 句+）</div>
+      <div class="task-material">笔记本 — Liebe/r [Name], ich heiße… Ich lerne seit einem Monat Deutsch…</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day29">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="29"></button>
+      <div><h3>Day 29</h3><span class="subtitle">听力马拉松 + 模拟测试</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">Goethe A1 模拟听力（Hören Teil 1-3）</div>
+      <div class="task-material">goethe.de → A1 Modellsatz（免费下载）</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">对答案，分析错题</div>
+      <div class="task-material">模拟题答案</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">Anki 复习</div>
+      <div class="task-material">Anki</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 10min</span>
+      <div class="task-title">Goethe A1 模拟阅读（Lesen Teil 1-3）</div>
+      <div class="task-material">goethe.de A1 Modellsatz</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">Coffee Break German S1E05-E06</div>
+      <div class="task-material">Coffee Break German 播客</div>
+    </div>
+  </div></div>
+</div>
+
+<div class="day-card" id="day30">
+  <div class="day-header" onclick="toggleDay(this)">
+    <div class="day-header-left">
+      <button class="check-btn" onclick="event.stopPropagation();toggleCheck(this)" data-day="30"></button>
+      <div><h3>Day 30</h3><span class="subtitle">总结与展望</span></div>
+    </div>
+    <span class="toggle">▼</span>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="task-block">
+      <span class="task-time">早 · 20min</span>
+      <div class="task-title">Anki 全面复习（~420-450 词）</div>
+      <div class="task-material">Anki</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">早 · 10min</span>
+      <div class="task-title">用德语录 1 分钟自我介绍，保存</div>
+      <div class="task-material">手机录音</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 15min</span>
+      <div class="task-title">对比 Day1 录音 vs 今天，感受进步</div>
+      <div class="task-material">对比录音</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">午 · 10min</span>
+      <div class="task-title">列出薄弱语法点，规划下月重点</div>
+      <div class="task-material">笔记本</div>
+    </div>
+    <div class="task-block">
+      <span class="task-time">晚 · 15min</span>
+      <div class="task-title">看一期完整 Easy German 街采（无字幕→有字幕）</div>
+      <div class="task-material">YouTube: Easy German</div>
+    </div>
+    <div class="day-focus"><strong>Herzlichen Glückwunsch!</strong> 你完成了 30 天德语入门！</div>
+  </div></div>
+</div>
+
+<div class="milestone">
+  <h3>Week 4 / 最终里程碑</h3>
+  <ul>
+    <li>能用 Perfekt 描述过去经历</li>
+    <li>能写 10 句以上的短邮件</li>
+    <li>Goethe A1 模拟题听力+阅读 60%+</li>
+    <li>掌握 420-450 个核心词汇</li>
+  </ul>
+</div>
+</section>
+
+<div class="bottom-tip">
+  <h3>保底原则</h3>
+  <p>如果某天特别忙，最低保底：<strong>Anki 5min + DW 1课 15min = 20min</strong>。绝不断天。</p>
+</div>
+
+</div><!-- container -->
+
+<div class="progress-bar">
+  <span class="label" id="progressLabel">0/30</span>
+  <div class="bar"><div class="bar-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="label" id="progressPct">0%</span>
+</div>
+
+<script>
+function toggleDay(header) {
+  const card = header.closest('.day-card');
+  card.classList.toggle('open');
+}
+
+function toggleCheck(btn) {
+  btn.classList.toggle('checked');
+  updateProgress();
+  saveState();
+}
+
+function updateProgress() {
+  const total = document.querySelectorAll('.check-btn').length;
+  const checked = document.querySelectorAll('.check-btn.checked').length;
+  const pct = Math.round((checked / total) * 100);
+  document.getElementById('progressLabel').textContent = checked + '/' + total;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+function saveState() {
+  const state = {};
+  document.querySelectorAll('.check-btn').forEach(btn => {
+    state[btn.dataset.day] = btn.classList.contains('checked');
+  });
+  localStorage.setItem('german30_progress', JSON.stringify(state));
+}
+
+function loadState() {
+  const saved = localStorage.getItem('german30_progress');
+  if (saved) {
+    const state = JSON.parse(saved);
+    Object.keys(state).forEach(day => {
+      if (state[day]) {
+        const btn = document.querySelector(`.check-btn[data-day="${day}"]`);
+        if (btn) btn.classList.add('checked');
+      }
+    });
+  }
+  updateProgress();
+}
+
+// Nav scroll highlight
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('.nav a');
+function updateNav() {
+  let current = '';
+  sections.forEach(s => {
+    if (s.getBoundingClientRect().top <= 120) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', updateNav, { passive: true });
+
+// Auto-open today's card (if within 30 days)
+function openToday() {
+  const start = localStorage.getItem('german30_start');
+  if (!start) {
+    localStorage.setItem('german30_start', new Date().toISOString());
+    document.getElementById('day1')?.classList.add('open');
+  } else {
+    const diff = Math.floor((Date.now() - new Date(start).getTime()) / 86400000) + 1;
+    if (diff >= 1 && diff <= 30) {
+      document.getElementById('day' + diff)?.classList.add('open');
+    }
+  }
+}
+
+loadState();
+openToday();
+</script>
+</body>
+</html>
